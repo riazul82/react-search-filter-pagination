@@ -1,5 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200;300;400;500;600&display=swap');
+
 * {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  height: auto;
+}
+
+.topbar {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  display: flex;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#selectCountry {
+  padding: 0.2rem 0.4rem;
+  color: #111;
+  font-size: 1rem;
+  border: 1px solid #888;
+  outline: none;
+  border-radius: 0.2rem;
+}
+
+.searchBox {
+  width: 280px;
+}
+
+.searchBox input {
+  padding: 0.2rem 0.6rem;
+  color: #111;
+  font-size: 1rem;
+  width: 100%;
+  border: 1px solid #888;
+  outline: none;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+}
+
+.dataCountBox p {
+  padding: 0.2rem 0.6rem;
+  color: #111;
+  font-size: 1rem;
+}
+
+.dataContent {
+  margin-top: 1rem;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: steelblue;
+  color: #fff;
+}
+
+tr {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background: #ddd;
+}
+
+th {
+  padding: 0.4rem 0.2rem;
+}
+
+td {
+  padding: 0.4rem 0.2rem;
 }
