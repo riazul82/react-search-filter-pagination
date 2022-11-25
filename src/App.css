@@ -33,7 +33,7 @@
 }
 
 .searchBox {
-  width: 280px;
+  width: 300px;
 }
 
 .searchBox input {
@@ -58,6 +58,7 @@
 }
 
 .dataTable {
+  margin-bottom: 2rem;
   width: 100%;
   border-collapse: collapse;
 }

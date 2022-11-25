@@ -90,7 +90,7 @@ const MyApp = () => {
                                 <th>email</th>
                                 <th>phone</th>
                                 <th>gender</th>
-                                <th>Category</th>
+                                <th>category</th>
                                 <th>location</th>
                             </tr>
                         </thead>
