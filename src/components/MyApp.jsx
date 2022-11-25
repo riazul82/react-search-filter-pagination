@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {arr} from './data';
+import {arr} from '../data';
+import Footer from './Footer';
+import Pagination from './Pagination';
 
 const MyApp = () => {
     const [data, setData] = useState('');
@@ -7,6 +9,10 @@ const MyApp = () => {
     const [searchTimer, setSearchTimer] = useState();
     const [selectedCountry, setSelectedCountry] = useState('all');
     const [loader, setLoader] = useState(false);
+
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [projectsPerPage, setProjectsPerPage] = useState(10);
 
     useEffect(() => {
         setData(arr);
@@ -28,8 +34,8 @@ const MyApp = () => {
     }
 
     const filterSearchItems = (item) => {
-        let mainTxt = ''.concat(item.id, item.username, item.email, item.phone, item.gender, item.category, item.country).replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-        let srchTxt = searchText.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        let mainTxt = ''.concat(item.id, item.username, item.email, item.phone, item.gender, item.category, item.country).replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
+        let srchTxt = searchText.replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
 
         if (searchText === '' || mainTxt.includes(srchTxt)) {
             return true;
@@ -38,6 +44,14 @@ const MyApp = () => {
         }
     }
 
+    
+    const getPaginationData = (currentPage, itemsPerPage) => {
+        setCurrentPage(parseInt(currentPage));
+        setProjectsPerPage(parseInt(itemsPerPage));
+    }
+
+    let lastIndex = currentPage * projectsPerPage;
+    let firstIndex = lastIndex - projectsPerPage;
     let filteredData = [];
 
     const handleFilter = () => {
@@ -96,7 +110,7 @@ const MyApp = () => {
                         </thead>
                         <tbody>
                             {loader ? <tr style={{textAlign: 'left'}}><td style={{paddingTop: '0.4rem'}}>Searching...</td></tr> : null}
-                            {!loader && ((filteredData.length) ? filteredData.map((elem, index) => {
+                            {!loader && ((filteredData.length) ? filteredData.slice(firstIndex, lastIndex).map((elem, index) => {
                                 return <tr key={index}>
                                     <td>{elem.id}</td>
                                     <td>{elem.username}</td>
@@ -111,7 +125,10 @@ const MyApp = () => {
                         </tbody>
                     </table>
                 </div>
+
+                <Pagination itemsLength={filteredData.length} getPaginationData={getPaginationData} />
             </div>
+            <Footer />
         </>
     );
 }
