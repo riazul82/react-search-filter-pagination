@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {arr} from '../data';
+
+// components
 import Footer from './Footer';
 import Pagination from './Pagination';
 
+// data
+import { arr } from '../data';
+
 const MyApp = () => {
     const [data, setData] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchTimer, setSearchTimer] = useState();
     const [selectedCountry, setSelectedCountry] = useState('all');
@@ -16,7 +21,33 @@ const MyApp = () => {
 
     useEffect(() => {
         setData(arr);
-    }, []);
+
+        const filterSearchItems = (item) => {
+            let mainTxt = ''.concat(item.id, item.username, item.email, item.phone, item.gender, item.category, item.country).replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
+            let srchTxt = searchText.replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
+    
+            if (searchText === '' || mainTxt.includes(srchTxt)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        let filteredDataItems = [];
+
+        filteredDataItems = data && data.filter((item) => {
+            if (selectedCountry === 'all' && filterSearchItems(item)) {
+                return item;
+            } else if (item.country.toLowerCase().includes(selectedCountry) && filterSearchItems(item)) {
+                return item;
+            } else {
+                return null;
+            }
+        });
+
+        setFilteredData(filteredDataItems);
+
+    }, [data, searchText, selectedCountry]);
 
     const handleSelectedCountry = (e) => {
         setSelectedCountry(e.target.value);
@@ -29,21 +60,9 @@ const MyApp = () => {
             setTimeout(() => {
                 setSearchText(e.target.value);
                 setLoader(false);
-            }, 900)
+            }, 800)
         );
     }
-
-    const filterSearchItems = (item) => {
-        let mainTxt = ''.concat(item.id, item.username, item.email, item.phone, item.gender, item.category, item.country).replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
-        let srchTxt = searchText.replace(/[^a-zA-Z0-9@]/g, '').toLowerCase();
-
-        if (searchText === '' || mainTxt.includes(srchTxt)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     
     const getPaginationData = (currentPage, itemsPerPage) => {
         setCurrentPage(parseInt(currentPage));
@@ -52,23 +71,9 @@ const MyApp = () => {
 
     let lastIndex = currentPage * projectsPerPage;
     let firstIndex = lastIndex - projectsPerPage;
-    let filteredData = [];
-
-    const handleFilter = () => {
-        filteredData = data && data.filter((item) => {
-            if (selectedCountry === 'all' && filterSearchItems(item)) {
-                return item;
-            } else if (item.country.toLowerCase().includes(selectedCountry) && filterSearchItems(item)) {
-                return item;
-            } else {
-                return null;
-            }
-        });
-    }
 
     return (
         <>
-            {!loader && handleFilter()}
             <div className="container">
                 <div className="topbar">
                     <div className="category">

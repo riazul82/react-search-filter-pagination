@@ -88,6 +88,7 @@ td {
 
 
 
+
 /* pagination */
 .paginationBox {
   margin: 1rem 0 3rem 0;
@@ -129,7 +130,7 @@ td {
 
 
 
-
+/* footer */
 .footer {
   margin: 0 auto;
   max-width: 1200px;
@@ -146,6 +147,7 @@ td {
 }
 
 .footer p a {
-  color: steelblue;
+  color: #1a6099;
   text-decoration: none;
+  font-weight: 500;
 }
